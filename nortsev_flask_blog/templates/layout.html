@@ -1,106 +1,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Личный блог</title>
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
     {% if title %}
-        <title>Flask-блог - {{ title }}</title>
+        <title>Личный блог- {{ title }}</title>
     {% else %}
-        <title>Flask-блог</title>
+        <title>Личный блог</title>
     {% endif %}
 
     {% block head %} {% endblock head %}
 
     <style>
-      body{
-        background-color: #e5e5e5;
-        margin-top: 6.5rem;
-      }
+        /* Menu */
+        .menu {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            font-size: 20px;
+            color: #fff;
+            background: #1abc9c;
+            padding: 12px;
+        }
 
-      .navigation-links{
-        color: white !important;
-        font-weight: 500;
-        background-color: rgb(183, 214, 252);
-        border-radius: 5px;
-        border-bottom: 4px solid blue;
-        margin: 5px;
-        background-size: 200% 200%;
-        background-image: linear-gradient( transparent 50%, rgb(79, 128, 233) 50%);
-        transition: background-position 300ms, color 300ms ease, border-color 300ms ease;      
-      }
+        .menu-link {
+            list-style: none;
+            padding: 25px;
+            margin: 0;
+            text-align: center;
+        }
 
-      .navigation-links:hover{
-        color: white;
-        background-image: linear-gradient( transparent 50%, #3a86ff 50%);
-        background-position: 0% 100%;
-      }
+        .menu-link:before,
+        .menu-link:after {
+            content: " ";
+            display: table;
+        }
 
-      .navbar{
-        background-color: #c6def1; 
-        box-shadow: 0px 1px 10px black;
-      }
+        .menu-link:after {
+            clear: both;
+        }
 
-      .navbar .container{
-        margin-bottom: 0;
-      }
+        .menu-link li {
+            display: inline-block;
+            margin: 2px 4px;
+        }
+
+        .menu-link li a {
+            display: block;
+            color: #333333;
+            text-align: center;
+            font-size: 13px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-link li a:hover {
+            color: #1abc9c;
+        }
+
+
+
+        /* About Me (Left Sidebar) */	
+
+        .about-fixed {
+            position: fixed;
+            width: 20.8%;
+            margin-top: 3%;
+        }
+
+        .my-pic {
+            width: 100%;
+            box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
+        }
+
+        .my-pic img {
+            width: 100%;
+        }
+
+        .my-detail {
+            text-align: center;
+            margin-bottom: 30px;
+            background: #ffffff;
+            box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
+        }
+
+        .my-detail .white-spacing {
+            padding: 23px 0;
+            border-bottom: 1px dashed #cccccc;
+        }
+
+        .my-detail h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .my-detail span {
+            color: #c1c1c1;
+            font-weight: 400;
+            line-height: 30px;
+            font-size: 16px;
+        }
+
+        .info-title {
+          border: 1px solid #c1c1c1;
+          margin-left: 22%;
+          text-align: center;
+        }
     </style>
 
     
   {% block style %} {% endblock style %}
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/" style="color: rgb(7, 85, 173); font-family: 'Lobster', cursive; font-weight: 800; font-size: 30px;">Мой блог</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          {% if current_user.is_authenticated %}
-            <h4>Привет, {{ current_user.username }}!</h4>
-          {% endif %}
-          <div class="collapse navbar-collapse" id="navbarToggle" style="justify-content: flex-end;">
-            <!-- Navbar Right Side -->
+     <div id="main">
+         <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="about-fixed">
+                  <div class="my-pic">
+                    <img src="https://dieutek.com/wp-content/uploads/2019/09/Python-Programming.jpg" alt="">
+                    <div id="menu" class="collapse">
+                      <ul class="menu-link">
+                          <li><a href=#>Обо мне</a></li>
+                          <li><a href=#>Работы</a></li>
+                          <li><a href=#>Контакты</a></li>
+                        </ul>
+                    </div>
+                  </div>
+                  <div class="my-detail">
+                      <div class="white-spacing">
+                          <h1>Норцев Владимир</h1>
+                          <span>Python Developer</span>
+                    </div>                      
+                  </div>
+            </div>
+            <div class="info-title">
+                <h2>Мой блог</h2>
+            </div>
+        </div>      
 
-          </div>
-        </div>
-      </nav>
-    </header>
-    
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-10">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-    </main>
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      {% block content %}
+      {% endblock content %}            
 </body>
 </html>
