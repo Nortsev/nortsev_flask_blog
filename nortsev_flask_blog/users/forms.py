@@ -18,14 +18,14 @@ class RegistrationForm(FlaskForm):
                                                  EqualTo('password')])
     submit = SubmitField('Зарегистрироваться')
 
-
+    @staticmethod
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError(
                 'Это имя занято. Пожалуйста, выберите другое.')
 
-
+    @staticmethod
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:

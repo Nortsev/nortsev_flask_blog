@@ -108,7 +108,6 @@
 
         .info-title {
           border: 1px solid #c1c1c1;
-          margin-left: 22%;
           text-align: center;
         }
     </style>
@@ -118,6 +117,9 @@
 </head>
 <body>
      <div id="main">
+          <div class="info-title">
+            <h2>Учебный проект блога на Flask</h2>
+          </div>
          <div class="container">
             <div class="row">
               <div class="col-md-3">
@@ -136,11 +138,17 @@
                       <div class="white-spacing">
                           <h1>Норцев Владимир</h1>
                           <span>Python Developer</span>
-                    </div>                      
+                    </div>   
+                    <div class="my-detail">
+                      <div class="white-spacing">
+                        {% if current_user.is_authenticated %}
+                            <h4>Привет, {{ current_user.username }}!</h4>
+                        {% else %}
+                            <a class="nav-link nav-item navigation-links" href="{{url_for('users.login') }}">Войти</a> <br>
+                            <a class="nav-link nav-item navigation-links" href="{{url_for('users.register') }}">Зарегистрироваться</a>
+                        {% endif %}
+                    </div>                           
                   </div>
-            </div>
-            <div class="info-title">
-                <h2>Мой блог</h2>
             </div>
         </div>      
 

@@ -25,3 +25,22 @@ def register():
               ' Теперь вы можете войти в систему', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@users.route("/login", methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password,
+                                               form.password.data):
+            login_user(user, remember=form.remember.data)
+
+            return redirect(url_for('main.home'))
+        else:
+            flash('Войти не удалось. Пожалуйста, '
+                  'проверьте электронную почту и пароль', 'внимание')
+    return render_template('login.html', title='Аутентификация', form=form)
