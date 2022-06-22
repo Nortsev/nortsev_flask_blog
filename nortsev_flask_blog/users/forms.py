@@ -19,14 +19,14 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Зарегистрироваться')
 
     @staticmethod
-    def validate_username(self, username):
+    def validate_username(username):
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError(
                 'Это имя занято. Пожалуйста, выберите другое.')
 
     @staticmethod
-    def validate_email(self, email):
+    def validate_email(email):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError(
@@ -47,7 +47,7 @@ class UpdateAccountForm(FlaskForm):
                                        Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    picture = FileField('Обновить фото профиля',
+    picture = FileField('Аватар',
                         validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Обновить')
 

@@ -54,6 +54,13 @@
             }
             .form-group{
                 text-align: center;
+                padding: 2%;
+                margin: 1%;
+                width: 20%;
+            }
+            .content-section{
+                margin-left: auto;
+                margin-right: auto;
             }
 
     </style>
@@ -70,17 +77,17 @@
 <div class="container">
     <!-- Blog Post Start -->
     <div class="col-md-12 blog-post">
-        <div class="content-section" style="box-shadow: 10px 15px 10px #4a4e69;">
+        <div class="content-section" style="box-shadow: 10px 15px 10px #4a4e69;" >
                 <form method="POST" action="">
                     {{ form.hidden_tag() }}
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" style="margin-left: auto; margin-right: auto;">
                         <legend class="border-bottom mb-4">Регистрация</legend>
                         <div class="form-group">
                             {{ form.username.label(class="form-control-label") }}
 
                             {% if form.username.errors %}
                                 {{ form.username(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
+                                <div class=" offset-lg-3 invalid-feedback">
                                     {% for error in form.username.errors %}
                                         <span>{{ error }}</span>
                                     {% endfor %}
@@ -129,7 +136,7 @@
                             {% endif %}
                         </div>
                     </fieldset>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left: auto; margin-right: auto;">
                         {{ form.submit(class="btn btn-outline-info") }}
                     </div>
                 </form>
