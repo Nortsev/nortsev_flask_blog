@@ -1,2 +1,5 @@
 /venv
 .DS_Store
+nortsev_flask_blog/__pycache__/
+nortsev_flask_blog/main/__pycache__/
+nortsev_flask_blog/users/__pycache__/        
