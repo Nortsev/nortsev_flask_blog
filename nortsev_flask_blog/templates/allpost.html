@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<style>
+  div.blog-post {
+    margin-left: 23%;
+    margin-bottom: 50px;
+  }
+
+  .blog-post .post-image img {
+    width: 100%;
+  }
+
+  .blog-post .post-image p {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .blog-post .post-image a {
+    font-weight: 600;
+  }
+
+  .blog-post .post-title h1 {
+    color: #333333;
+    font-size: 35px;
+    line-height: 45px;
+    font-weight: 700;
+    margin-top: 24px;
+  }
+
+  .blog-post .post-title h2 {
+    font-size: 25px;
+    line-height: 35px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .blog-post .post-info {
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 500;
+    padding: 10px 0;
+    color: #8c8c8c;
+  }
+
+  .blog-post p {
+    font-size: 16px;
+    line-height: 30px;
+    color: #696868;
+    font-weight: 300;
+    letter-spacing: 0.8px;
+    font-family: "Poppins", sans-serif;
+  }
+</style>
+{% endblock head %}
+
+{% block content %}
+{% for post in posts.items %}
+<br>
+<div class="container">
+  <!-- Blog Post Start -->
+  <div class="col-md-12 blog-post">
+    <div class="post-title">
+      <!-- <a href="#"><h1>Мой первый блог </h1></a> -->
+      <article class="media" style="display: flex; flex-direction: column;">
+        <img class="rounded-circle article-img" style="margin-right: 5px;"
+          src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+        <a href="{{ url_for('users.user_posts', username=post.author.username) }}" id="author"
+          style="margin: 0 auto;">{{ post.author.username }}</a>
+      </article>
+    </div>
+    <div class="post-info">
+      <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %I:%M %p') }}</small>
+    </div>
+    <p class="card-text">{{ post.content }}</p>
+    <a href="{{ url_for('posts.post', post_id=post.id) }}"
+      class="button button-style button-anim fa fa-long-arrow-right"><span>Read More</span></a>
+  </div>
+  <!-- Blog Post End -->
+</div>
+{% endfor %}
+
+<div class="pagination" style="text-align: center;">
+  {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  {% if page_num %}
+  {% if posts.page == page_num %}
+  <a class="btn btn-success mb-4" style="text-align: center;" href="{{ url_for('posts.allpost', page=page_num) }}">{{
+    page_num }}</a>
+  {% else %}
+  <a class="btn btn-outline-success mb-4" style="text-align: center;"
+    href="{{ url_for('posts.allpost', page=page_num) }}">{{ page_num }}</a>
+  {% endif %}
+  {% else %}
+  ...
+  {% endif %}
+  {% endfor %}
+  {% endblock content %}
+</div>

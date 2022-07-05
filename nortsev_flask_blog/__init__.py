@@ -10,6 +10,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -18,13 +19,12 @@ def create_app():
     login_manager.init_app(app)
     bcrypt.init_app(app)
 
-    
     from nortsev_flask_blog.users.routes import users
     from nortsev_flask_blog.main.views import main
-    
+    from nortsev_flask_blog.posts.routes import posts
+
     app.register_blueprint(main)
     app.register_blueprint(users)
- 
+    app.register_blueprint(posts)
 
     return app
-

@@ -2,7 +2,8 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from nortsev_flask_blog import db, bcrypt
 from nortsev_flask_blog.models import User, Post
-from nortsev_flask_blog.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm)
+from nortsev_flask_blog.users.forms import (
+    RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm)
 
 from nortsev_flask_blog.users.utils import save_picture
 
@@ -39,7 +40,10 @@ def login():
                                                form.password.data):
             login_user(user, remember=form.remember.data)
 
-            return redirect(url_for('main.home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page \
+                else redirect(url_for('posts.allpost'))
+
         else:
             flash('Войти не удалось. Пожалуйста, '
                   'проверьте электронную почту и пароль', 'внимание')
@@ -63,8 +67,7 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
         page = request.args.get('page', 1, type=int)
-        user = User.query.filter_by(username=
-				form.username.data).first_or_404()
+        user = User.query.filter_by(username=form.username.data).first_or_404()
         posts = Post.query.filter_by(author=user) \
             .order_by(Post.date_posted.desc()) \
             .paginate(page=page, per_page=5)
@@ -79,3 +82,13 @@ def account():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+
+@users.route("/user/<string:username>")
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.date_posted.desc())\
+        .paginate(page=page, per_page=5)
+    return render_template('user_posts.html', posts=posts, user=user)
