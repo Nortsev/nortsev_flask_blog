@@ -65,7 +65,7 @@
       <!-- <a href="#"><h1>Мой первый блог </h1></a> -->
       <article class="media" style="display: flex; flex-direction: column;">
         <img class="rounded-circle article-img" style="margin-right: 5px;"
-          src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+          src="{{ url_for('static',filename='profile_pics/' + post.author.image_file) }}">
         <a href="{{ url_for('users.user_posts', username=post.author.username) }}" id="author"
           style="margin: 0 auto;">{{ post.author.username }}</a>
       </article>

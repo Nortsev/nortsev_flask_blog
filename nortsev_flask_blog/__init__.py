@@ -26,7 +26,9 @@ def create_app(config_class=Config):
     from nortsev_flask_blog.users.routes import users
     from nortsev_flask_blog.main.views import main
     from nortsev_flask_blog.posts.routes import posts
+    from nortsev_flask_blog.errors.handlers import errors
 
+    app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(posts)
